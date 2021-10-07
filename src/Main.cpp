@@ -8,6 +8,8 @@
 
 #include "Ball.h"
 
+#include "Stick.h"
+
 #include "Physics.h"
 
 SDL_Window *window = nullptr;
@@ -20,17 +22,45 @@ int
         fps,
         lastTime;
 
-bool running = true;
+double power = 0.0;
+
+bool
+        running = true,
+        isMouseDown = false,
+        isMouseUp = false;
 
 Ball *ball = nullptr;
+Stick *stick = nullptr;
 
 void init() {
-        Vector position(100, 100);
-        ball = new Ball(renderer, position, 0);
+        ball = new Ball(renderer, Vector(400, 290), 0);
+        stick = new Stick(renderer, ball->getPos());
 }
 
 void update() {
         ball->update();
+        stick->update();
+
+        if (isMouseDown) {
+                power += 0.8;
+
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+
+                double deg = Physics::getMouseAngle(ball->getPos(), Vector(x, y));
+
+                stick->increasePower(deg);
+        }
+        if (isMouseUp) {
+                double angle = (stick->getAngle() * 3.14) / 180;
+
+                stick->shoot();
+                ball->shoot(power, angle);
+                isMouseUp = false;
+                power = 0.0;
+        }
+
+        if (!ball->isMoving() && !isMouseDown) stick->setPos(ball->getPos().getX(), ball->getPos().getY());
 }
 
 void input() {
@@ -39,15 +69,24 @@ void input() {
                 switch (event.type) {
                         case SDL_QUIT: running = false; break;
                         case SDL_MOUSEBUTTONDOWN:
+                                if (ball->isMoving()) return;
+                                isMouseDown = true;
+                                isMouseUp = false;
+                                break;
+                        case SDL_MOUSEBUTTONUP:
+                                if (ball->isMoving()) return;
+                                isMouseDown = false;
+                                isMouseUp = true;
+                                break;
+                        case SDL_MOUSEMOTION:
+                                if (ball->isMoving()) return;
+
                                 int x, y;
                                 SDL_GetMouseState(&x, &y);
 
-                                Vector mousePos(x, y);
+                                double degrees = Physics::getStickAngle(Vector(x, y), ball->getPos());
 
-                                double rotation = Physics::getRotation(ball->getPos(), mousePos);
-                                double power = Physics::getDistance(ball->getPos(), mousePos);
-
-                                ball->shoot(power * 0.1, rotation);
+                                stick->setRotation(degrees);
                                 break;
                 }
         }
@@ -63,7 +102,7 @@ void tick() {
 }
 
 void render() {
-        SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
+        SDL_SetRenderDrawColor(renderer, 10, 98, 50, 0.8);
         SDL_RenderClear(renderer);
 
         ++frameCount;
@@ -73,6 +112,7 @@ void render() {
         }
 
         ball->draw();
+        stick->draw();
 
         SDL_RenderPresent(renderer);
 }
@@ -95,7 +135,9 @@ int main(int argc, char const *argv[]) {
                 render();
         };
 
+        delete stick;
         delete ball;
+
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         SDL_Quit();

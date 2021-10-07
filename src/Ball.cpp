@@ -31,12 +31,12 @@ void Ball::update(const double &delta) {
 
         if (velocity.length() < 0.1) {
                 velocity = Vector();
-                isMoving = false;
+                moving = false;
         }
 }
 
 void Ball::collideWithTable() {
-        if (!isMoving) return;
+        if (!moving) return;
 
         if (position.getY() <= 0) {
                 position.setY(0);
@@ -64,10 +64,14 @@ void Ball::draw() {
 }
 
 void Ball::shoot(const double &power, const double &rotation) {
-        velocity = Vector(power * cos(rotation), power * sin(rotation));
-        isMoving = true;
+        velocity = Vector(-1 * cos(rotation) * power, -1 * sin(rotation) * power);
+        moving = true;
 }
 
 Vector Ball::getPos() const {
         return position;
+}
+
+bool Ball::isMoving() const {
+        return moving;
 }

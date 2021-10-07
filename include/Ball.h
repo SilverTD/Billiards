@@ -14,6 +14,7 @@ class Ball {
                 ~Ball();
 
                 Vector getPos() const;
+                bool isMoving() const;
 
                 void update(const double &delta = DELTA);
                 void collideWithTable();
@@ -32,5 +33,5 @@ class Ball {
                         velocity = Vector();
 
                 int color;
-                bool isMoving = false;
+                bool moving = false;
 };
