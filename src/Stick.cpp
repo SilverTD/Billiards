@@ -15,7 +15,7 @@ renderer(renderer), position(position), origin(position) {
         srcrect.w = textureWidth;
         srcrect.h = textureHeight;
 
-        center = { -30, static_cast<int>( 30 / 2) };
+        center = { -30, static_cast<int>(30 >> 1) };
 
         SDL_FreeSurface(surface);
 }
