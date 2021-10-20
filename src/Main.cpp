@@ -84,7 +84,7 @@ void input() {
                                 int x, y;
                                 SDL_GetMouseState(&x, &y);
 
-                                double degrees = Physics::getStickAngle(Vector(x, y), ball->getPos());
+                                double degrees = Physics::getStickAngle(ball->getPos(), Vector(x, y));
 
                                 stick->setRotation(degrees);
                                 break;

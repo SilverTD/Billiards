@@ -15,7 +15,7 @@ renderer(renderer), position(position), origin(position) {
         srcrect.w = textureWidth;
         srcrect.h = textureHeight;
 
-        center = { -30, static_cast<int>(30 >> 1) };
+        center = { -30, 15 };
 
         SDL_FreeSurface(surface);
 }
@@ -55,7 +55,7 @@ void Stick::setPos(const double &x, const double &y) {
 }
 
 void Stick::increasePower(const double &angle) {
-        velocity = Vector(5 * cos(angle), 5 * sin(angle));
+        velocity = Vector(-5 * cos(angle), -5 * sin(angle));
 }
 
 void Stick::shoot() {
