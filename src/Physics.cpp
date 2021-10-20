@@ -16,10 +16,10 @@ double Physics::getMouseAngle(Vector vector, Vector vector2) {
 }
 
 double Physics::getStickAngle(Vector vector, Vector vector2) {
-        double oposed = vector2.getY() - vector.getY();
-        double hyp = std::hypot(vector2.getX() - vector.getX(), vector2.getY() - vector.getY());
+        double opposite = vector2.getY() - vector.getY();
+        double hypotenuse = std::hypot(vector2.getX() - vector.getX(), vector2.getY() - vector.getY());
 
-        double degrees = (std::asin(oposed / hyp) * 180) / PI + 180;
+        double degrees = (std::asin(opposite / hypotenuse) * 180) / PI + 180;
 
         if (vector.getX() > vector2.getX()) degrees = 180 - degrees;
         if (degrees < 0) degrees += 360;
