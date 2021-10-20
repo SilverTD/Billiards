@@ -51,7 +51,8 @@ if (degrees < 0) degrees += 360;
 stick->setAngle(degrees);
 ```
 
-And when you click on the screen, the stick will automatically move back, to do that we need do:
+And if you click on the screen, the stick will automatically move backwards, to do that we need:
+
 1. Calculate the angle of the mouse:
   
   - Opposite:  ![](readme/image.png)
