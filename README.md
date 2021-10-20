@@ -23,15 +23,15 @@ How do we calculate the angle of the stick?
 
 1. First we need to calculate the opposite:
 
-   ![](https://bit.ly/3jlp6sN)
+   ![](readme/image.png)
 
 2. Next, we need to calculate the hypotenuse:
 
-   ![](http://www.sciweavers.org/tex2img.php?eq=%20%5Csqrt%7B%28x_2%20-%20x_1%29%5E2%20%2B%20%28y_2%20-%20y_1%29%5E2%7D%20%3D%20%20%5Csqrt%7B%281107%20-%20400%29%5E2%20%2B%20%2812%20-%20290%29%5E2%7D%20%20%5Capprox%20759.693&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+   ![](readme/image1.png)
 
 3. After calculate the opposite and hypotenuse then we calculate the angle of the stick (use inverse sine):
 
-   ![](https://bit.ly/3C11X62)
+   ![](readme/image2.png)
    
 4. We need to check if x<sub>1</sub> > x<sub>2</sub> then angle = 180° - angle.
 5. If the angle < 0 then the angle will add 360°
@@ -48,19 +48,15 @@ double degrees = (std::asin(opposite / hypotenuse) * 180) / PI + 180;
 if (vector.getX() > vector2.getX()) degrees = 180 - degrees;
 if (degrees < 0) degrees += 360;
 
-return degrees;
+stick->setAngle(degrees);
 ```
 
 And when you click on the screen, the stick will automatically move back, to do that we need do:
 1. Calculate the angle of the mouse:
   
-  - Opposite:
-    ![](https://bit.ly/3jlp6sN)
-  - Adjacent:
-    ![](https://bit.ly/3jDiZAj)
-  
-  - Use atan2:
-    ![](https://bit.ly/2Z3QIvD)
+  - Opposite:  ![](readme/image.png)
+  - Adjacent:  ![](readme/image3.png)
+  - Use atan2: ![](readme/image4.png)
     
 2. Change the position of the stick:
   - stick's x add 5 * cos(-0.37463)
