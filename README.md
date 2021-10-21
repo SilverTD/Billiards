@@ -15,9 +15,9 @@ To make this game I use vectors and some math formulas (trigonometric formulas).
 
 ## How i used them
 
-- For example, we have mouse position (x<sub>2</sub>: 1007; y<sub>2</sub>: 12) and ball position (x<sub>1</sub>: 400; y<sub>1</sub>: 290)
+- For example, we have mouse position (x<sub>2</sub>: 1107; y<sub>2</sub>: 12) and ball position (x<sub>1</sub>: 400; y<sub>1</sub>: 290)
 
-![](https://media.discordapp.net/attachments/636515552428425236/900312017666207754/image0.jpg?width=705&height=375)
+![](readme/image0.png)
 
 How do we calculate the angle of the stick?
 
