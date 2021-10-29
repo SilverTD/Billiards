@@ -53,19 +53,3 @@ stick->setAngle(degrees);
    
 </details>
 
-And if you click on the screen, the stick will automatically move backwards, to do that we need:
-
-1. Calculate the angle of the mouse:
-  
-   - The <b>opposite side</b>:  ![](readme/image.png)
-   - The <b>adjacent side</b>:  ![](readme/image3.png)
-   - Use <b>atan2</b> function: ![](readme/image4.png)
-    
-2. Change the position of the stick:
-   - stick's x add <b>5 * cos(-0.37463)</b>.
-   - sticks's y add <b>5 * sin(-0.37463)</b>.
-   
-```cpp
-velocity = Vector(-5 * cos(angle), -5 * sin(angle));
-position.addTo(velocity);
-```
