@@ -9,13 +9,13 @@ class Stick {
                 Stick(SDL_Renderer *renderer, const Vector &position);
                 ~Stick();
 
-                Vector getPos();
-                double getAngle();
+                auto getPos() -> Vector;
+                auto getAngle() -> double;
 
                 void update();
                 void draw();
                 void setRotation(const double &rotation);
-                void setPos(const double &x, const double &y);
+                void setPos(const Vector &position);
                 void increasePower(const double &angle);
                 void shoot();
         private:

@@ -13,8 +13,8 @@ class Ball {
                 Ball(SDL_Renderer *renderer, const Vector &position, const int &color);
                 ~Ball();
 
-                Vector getPos() const;
-                bool isMoving() const;
+                auto getPos() const -> Vector;
+                auto isMoving() const -> bool;
 
                 void update(const double &delta = DELTA);
                 void collideWithTable();

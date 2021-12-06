@@ -4,24 +4,24 @@
 
 const double PI = std::atan(1) * 4;
 
-double Physics::getDistance(Vector vector, Vector vector2) {
-        return std::sqrt(std::pow(vector2.getX() - vector.getX(), 2) + std::pow(vector2.getY() - vector.getY(), 2));
+auto Physics::getDistance(const Vector &vector, const Vector &vector2) -> double {
+        return std::hypot(vector2.x - vector.x, vector2.y - vector.y);
 }
 
-double Physics::getMouseAngle(Vector vector, Vector vector2) {
-        double opposite = vector2.getY() - vector.getY();
-        double adjacent = vector2.getX() - vector.getX();
+auto Physics::getMouseAngle(const Vector &vector, const Vector &vector2) -> double {
+        double opposite = vector2.y - vector.y;
+        double adjacent = vector2.x - vector.x;
 
         return std::atan2(opposite, adjacent);
 }
 
-double Physics::getStickAngle(Vector vector, Vector vector2) {
-        double opposite = vector2.getY() - vector.getY();
-        double hypotenuse = std::hypot(vector2.getX() - vector.getX(), vector2.getY() - vector.getY());
+auto Physics::getStickAngle(const Vector &vector, const Vector &vector2) -> double {
+        double opposite = vector2.y - vector.y;
+        double hypotenuse = getDistance(vector, vector2);
 
         double degrees = (std::asin(opposite / hypotenuse) * 180) / PI + 180;
 
-        if (vector.getX() > vector2.getX()) degrees = 180 - degrees;
+        if (vector.x > vector2.x) degrees = 180 - degrees;
         if (degrees < 0) degrees += 360;
 
         return degrees;

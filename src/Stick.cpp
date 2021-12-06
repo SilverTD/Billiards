@@ -24,11 +24,11 @@ Stick::~Stick() {
         SDL_DestroyTexture(texture);
 }
 
-Vector Stick::getPos() {
+auto Stick::getPos() -> Vector {
         return position;
 }
 
-double Stick::getAngle() {
+auto Stick::getAngle() -> double {
         return rotation;
 }
 
@@ -39,7 +39,7 @@ void Stick::update() {
 void Stick::draw() {
         // x -> y -> w -> h
 
-        dstrect = { static_cast<int>(position.getX() + 55), static_cast<int>(position.getY() + 10), 700, 20 };
+        dstrect = { static_cast<int>(position.x + 55), static_cast<int>(position.y + 10), 700, 20 };
         SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, rotation, &center, SDL_FLIP_HORIZONTAL);
 }
 
@@ -47,9 +47,8 @@ void Stick::setRotation(const double &rotation) {
         this->rotation = rotation;
 }
 
-void Stick::setPos(const double &x, const double &y) {
-        position.setX(x);
-        position.setY(y);
+void Stick::setPos(const Vector &vector) {
+        position.setPosition({ vector.x, vector.y });
 
         origin = position;
 }

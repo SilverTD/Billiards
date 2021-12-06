@@ -12,6 +12,8 @@
 
 #include "Physics.h"
 
+const double PI = std::atan(1) * 4;
+
 SDL_Window *window = nullptr;
 SDL_Renderer *renderer = nullptr;
 
@@ -52,7 +54,7 @@ void update() {
                 stick->increasePower(deg);
         }
         if (isMouseUp) {
-                double angle = (stick->getAngle() * 3.14) / 180;
+                double angle = (stick->getAngle() * PI) / 180;
 
                 stick->shoot();
                 ball->shoot(power, angle);
@@ -60,7 +62,7 @@ void update() {
                 power = 0.0;
         }
 
-        if (!ball->isMoving() && !isMouseDown) stick->setPos(ball->getPos().getX(), ball->getPos().getY());
+        if (!ball->isMoving() && !isMouseDown) stick->setPos(ball->getPos());
 }
 
 void input() {

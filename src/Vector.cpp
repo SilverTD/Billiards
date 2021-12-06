@@ -2,47 +2,77 @@
 
 #include <math.h>
 
-Vector Vector::copy() {
+/* Operators */
+auto Vector::copy() const -> Vector {
         return Vector(x, y);
 }
 
-Vector Vector::add(Vector vector) {
-        return Vector(x + vector.getX(), y + vector.getY());
+auto Vector::add(const Vector &vector) const -> Vector {
+        return Vector(x + vector.x, y + vector.y);
 }
 
-Vector Vector::subtract(Vector vector) {
-        return Vector(x - vector.getX(), y - vector.getY());
+auto Vector::subtract(const Vector &vector) const -> Vector {
+        return Vector(x - vector.x, y - vector.y);
 }
 
-Vector Vector::mult(const double &scalar) {
+auto Vector::mult(const float &scalar) const -> Vector {
         return Vector(x * scalar, y * scalar);
 }
 
-double Vector::dot(Vector vector) {
-        return x * vector.getX() + y * vector.getY();
+auto Vector::operator+(const Vector &other) const -> Vector {
+        return Vector(x + other.x, y + other.y);
 }
 
-double Vector::length() {
-        return sqrt(pow(x, 2) + pow(y, 2));
+auto Vector::operator-(const Vector &other) const -> Vector {
+        return Vector(x - other.x, y - other.y);
 }
 
-double Vector::getX() {
-        return x;
+void Vector::addTo(const Vector &vector) {
+        x += vector.x;
+        y += vector.y;
 }
 
-double Vector::getY() {
-        return y;
+/* Get */
+auto Vector::dot(const Vector &vector) const -> float {
+        return x * vector.x + y * vector.y;
 }
 
-void Vector::addTo(Vector vector) {
-        x += vector.getX();
-        y += vector.getY();
+auto Vector::getDirection() const -> float {
+        return std::atan2(y, x);
 }
 
-void Vector::setX(const double &x) {
+auto Vector::getMagnitude() const -> float {
+        return std::hypot(x, y);
+}
+
+auto Vector::angleBetween(const Vector &vector) const -> float {
+        return std::atan2(x * vector.y - y * vector.x, x * vector.x + y * vector.y);
+}
+
+/* Set */
+void Vector::setDirection(const float &direction) {
+        auto magnitude = getMagnitude();
+        x = std::cos(direction) * magnitude;
+        y = std::sin(direction) * magnitude;
+}
+
+void Vector::setMagnitude(const float &magnitude) {
+        auto direction = getDirection();
+	x = std::cos(direction) * magnitude;
+	y = std::sin(direction) * magnitude;
+}
+
+void Vector::setPosition(const std::tuple<float, float> &position) {
+        x = std::get<0>(position);
+        y = std::get<1>(position);
+}
+
+void Vector::setPosition(const float &x, const float &y) {
         this->x = x;
+        this->y = y;
 }
 
-void Vector::setY(const double &y) {
-        this->y = y;
+/* Utilities */
+auto Vector::getPosition() const -> std::tuple<float, float> {
+        return std::make_tuple(x, y);
 }

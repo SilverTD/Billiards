@@ -20,6 +20,14 @@ Ball::~Ball() {
         SDL_DestroyTexture(texture);
 }
 
+auto Ball::getPos() const -> Vector {
+        return position;
+}
+
+auto Ball::isMoving() const -> bool {
+        return moving;
+}
+
 void Ball::update(const double &delta) {
         collideWithTable();
 
@@ -29,7 +37,7 @@ void Ball::update(const double &delta) {
         // Friction
         velocity = velocity.mult(0.984);
 
-        if (velocity.length() < 0.1) {
+        if (velocity.getMagnitude() < 0.1) {
                 velocity = Vector();
                 moving = false;
         }
@@ -38,40 +46,32 @@ void Ball::update(const double &delta) {
 void Ball::collideWithTable() {
         if (!moving) return;
 
-        if (position.getY() <= 0) {
-                position.setY(0);
-                velocity = Vector(velocity.getX(), -velocity.getY());
+        if (position.y <= 0) {
+                position.y = 0;
+                velocity = Vector(velocity.x, -velocity.y);
         }
-        else if (position.getY() >= SCREEN_HEIGHT - BALL_DIAMETER) {
-                position.setY(SCREEN_HEIGHT - BALL_DIAMETER);
-                velocity = Vector(velocity.getX(), -velocity.getY());
+        else if (position.y >= SCREEN_HEIGHT - BALL_DIAMETER) {
+                position.y = SCREEN_HEIGHT - BALL_DIAMETER;
+                velocity = Vector(velocity.x, -velocity.y);
         }
-        if (position.getX() <= 0) {
-                position.setX(0);
-                velocity = Vector(-velocity.getX(), velocity.getY());
+        if (position.x <= 0) {
+                position.x = 0;
+                velocity = Vector(-velocity.x, velocity.y);
         }
-        else if (position.getX() >= SCREEN_WIDTH - BALL_DIAMETER) {
-                position.setX(SCREEN_WIDTH - BALL_DIAMETER);
-                velocity = Vector(-velocity.getX(), velocity.getY());
+        else if (position.x >= SCREEN_WIDTH - BALL_DIAMETER) {
+                position.x = SCREEN_WIDTH - BALL_DIAMETER;
+                velocity = Vector(-velocity.x, velocity.y);
         }
 }
 
 void Ball::draw() {
         // x -> y -> w -> h
 
-        rect = { static_cast<int>(position.getX()), static_cast<int>(position.getY()), 50, 50 };
+        rect = { static_cast<int>(position.x), static_cast<int>(position.y), 50, 50 };
         SDL_RenderCopy(renderer, texture, nullptr, &rect);
 }
 
 void Ball::shoot(const double &power, const double &rotation) {
         velocity = Vector(-1 * cos(rotation) * power, -1 * sin(rotation) * power);
         moving = true;
-}
-
-Vector Ball::getPos() const {
-        return position;
-}
-
-bool Ball::isMoving() const {
-        return moving;
 }

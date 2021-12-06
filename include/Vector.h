@@ -1,30 +1,46 @@
 #pragma once
 
+#include <tuple>
+
 class Vector {
         public:
-                Vector(const double &x = 0, const double &y = 0):
+                Vector(const float &x = 0.0f, const float &y = 0.0f) :
                         x(x),
                         y(y)
                 {};
 
+                Vector(const Vector &vector) :
+                        x(vector.x),
+                        y(vector.y)
+                {};
+
                 ~Vector() = default;
 
-                Vector copy();
-                Vector add(Vector vector);
-                Vector subtract(Vector vector);
-                Vector mult(const double &scalar);
+                /* Operators */
+                auto copy() const -> Vector;
+                auto add(const Vector &vector) const -> Vector;
+                auto subtract(const Vector &vector) const -> Vector;
+                auto mult(const float &scalar) const -> Vector;
+                auto operator+(const Vector &other) const -> Vector;
+                auto operator-(const Vector &other) const -> Vector;
+                void addTo(const Vector &vector);
 
-                double dot(Vector vector);
-                double length();
+                /* Get */
+                auto dot(const Vector &vector) const -> float;
+                auto getDirection() const -> float;
+                auto getMagnitude() const -> float;
+                auto angleBetween(const Vector &vector) const -> float;
 
-                double getX();
-                double getY();
+                /* Set */
+                void setDirection(const float &direction);
+                void setMagnitude(const float &magnitude);
+                void setPosition(const std::tuple<float, float> &position);
+                void setPosition(const float &x, const float &y);
 
-                void addTo(Vector vector);
-                void setX(const double &x);
-                void setY(const double &y);
-        private:
-                double
+                /* Utilities */
+                auto getPosition() const -> std::tuple<float, float>;
+
+                float
                         x,
                         y;
 };
