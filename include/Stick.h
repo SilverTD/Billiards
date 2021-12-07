@@ -37,5 +37,6 @@ class Stick {
                         textureWidth,
                         textureHeight;
 
-                double rotation = 0;
+                double
+                        rotation = 0;
 };

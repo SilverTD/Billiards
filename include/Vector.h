@@ -4,6 +4,8 @@
 
 class Vector {
         public:
+                using Pos = std::tuple<float, float>;
+
                 Vector(const float &x = 0.0f, const float &y = 0.0f) :
                         x(x),
                         y(y)
@@ -21,9 +23,11 @@ class Vector {
                 auto add(const Vector &vector) const -> Vector;
                 auto subtract(const Vector &vector) const -> Vector;
                 auto mult(const float &scalar) const -> Vector;
+                auto addTo(const Vector &vector) -> Vector&;
+
                 auto operator+(const Vector &other) const -> Vector;
                 auto operator-(const Vector &other) const -> Vector;
-                void addTo(const Vector &vector);
+                auto operator+=(const Vector &other) -> Vector&;
 
                 /* Get */
                 auto dot(const Vector &vector) const -> float;
@@ -34,11 +38,11 @@ class Vector {
                 /* Set */
                 void setDirection(const float &direction);
                 void setMagnitude(const float &magnitude);
-                void setPosition(const std::tuple<float, float> &position);
+                void setPosition(const Pos &position);
                 void setPosition(const float &x, const float &y);
 
                 /* Utilities */
-                auto getPosition() const -> std::tuple<float, float>;
+                auto getPosition() const -> Pos;
 
                 float
                         x,

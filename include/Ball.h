@@ -15,11 +15,15 @@ class Ball {
 
                 auto getPos() const -> Vector;
                 auto isMoving() const -> bool;
+                auto getVelocity() const -> Vector;
 
                 void update(const double &delta = DELTA);
                 void collideWithTable();
                 void draw();
                 void shoot(const double &power, const double &rotation);
+                void setPos(const Vector &pos);
+                void setMoving(bool&& moving);
+                void setVelocity(const Vector &vector);
 
         private:
                 static std::array<const char*, 2> colors;

@@ -19,17 +19,26 @@ auto Vector::mult(const float &scalar) const -> Vector {
         return Vector(x * scalar, y * scalar);
 }
 
+auto Vector::addTo(const Vector &vector) -> Vector& {
+        x += vector.x;
+        y += vector.y;
+
+        return *this;
+}
+
 auto Vector::operator+(const Vector &other) const -> Vector {
         return Vector(x + other.x, y + other.y);
 }
 
-auto Vector::operator-(const Vector &other) const -> Vector {
-        return Vector(x - other.x, y - other.y);
+auto Vector::operator+=(const Vector &other) -> Vector& {
+        x += other.x;
+        y += other.y;
+
+        return *this;
 }
 
-void Vector::addTo(const Vector &vector) {
-        x += vector.x;
-        y += vector.y;
+auto Vector::operator-(const Vector &other) const -> Vector {
+        return Vector(x - other.x, y - other.y);
 }
 
 /* Get */
@@ -62,7 +71,7 @@ void Vector::setMagnitude(const float &magnitude) {
 	y = std::sin(direction) * magnitude;
 }
 
-void Vector::setPosition(const std::tuple<float, float> &position) {
+void Vector::setPosition(const Pos &position) {
         x = std::get<0>(position);
         y = std::get<1>(position);
 }
@@ -73,6 +82,6 @@ void Vector::setPosition(const float &x, const float &y) {
 }
 
 /* Utilities */
-auto Vector::getPosition() const -> std::tuple<float, float> {
+auto Vector::getPosition() const -> Pos {
         return std::make_tuple(x, y);
 }

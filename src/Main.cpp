@@ -12,7 +12,7 @@
 
 #include "Physics.h"
 
-const double PI = std::atan(1) * 4;
+using namespace Physics;
 
 SDL_Window *window = nullptr;
 SDL_Renderer *renderer = nullptr;
@@ -31,17 +31,24 @@ bool
         isMouseDown = false,
         isMouseUp = false;
 
-Ball *ball = nullptr;
+Ball
+        *ball = nullptr,
+        *ball2 = nullptr;
+
 Stick *stick = nullptr;
 
 void init() {
         ball = new Ball(renderer, Vector(400, 290), 0);
+        ball2 = new Ball(renderer, Vector(700, 290), 1);
         stick = new Stick(renderer, ball->getPos());
 }
 
 void update() {
         ball->update();
+        ball2->update();
         stick->update();
+
+        resolveCollision(ball, ball2);
 
         if (isMouseDown) {
                 power += 0.8;
@@ -49,7 +56,7 @@ void update() {
                 int x, y;
                 SDL_GetMouseState(&x, &y);
 
-                double deg = Physics::getMouseAngle(ball->getPos(), Vector(x, y));
+                double deg = getMouseAngle(ball->getPos(), Vector(x, y));
 
                 stick->increasePower(deg);
         }
@@ -86,7 +93,7 @@ void input() {
                                 int x, y;
                                 SDL_GetMouseState(&x, &y);
 
-                                double degrees = Physics::getStickAngle(ball->getPos(), Vector(x, y));
+                                double degrees = getStickAngle(ball->getPos(), Vector(x, y));
 
                                 stick->setRotation(degrees);
                                 break;
@@ -114,6 +121,7 @@ void render() {
         }
 
         ball->draw();
+        ball2->draw();
         stick->draw();
 
         SDL_RenderPresent(renderer);
@@ -126,7 +134,7 @@ int main(int argc, char const *argv[]) {
                 std::cout << "SDL_CreateWindowAndRenderer() failed" << '\n';
         if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
                 std::cout << "Failed to init SDL_Image" << '\n';
-        SDL_SetWindowTitle(window, "Physics");
+        SDL_SetWindowTitle(window, "Billiards");
 
         init();
 
@@ -139,6 +147,7 @@ int main(int argc, char const *argv[]) {
 
         delete stick;
         delete ball;
+        delete ball2;
 
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);

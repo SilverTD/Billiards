@@ -28,11 +28,15 @@ auto Ball::isMoving() const -> bool {
         return moving;
 }
 
+auto Ball::getVelocity() const -> Vector {
+        return velocity;
+}
+
 void Ball::update(const double &delta) {
         collideWithTable();
 
         velocity.mult(delta);
-        position.addTo(velocity);
+        position += velocity;
 
         // Friction
         velocity = velocity.mult(0.984);
@@ -74,4 +78,16 @@ void Ball::draw() {
 void Ball::shoot(const double &power, const double &rotation) {
         velocity = Vector(-1 * cos(rotation) * power, -1 * sin(rotation) * power);
         moving = true;
+}
+
+void Ball::setPos(const Vector &pos) {
+        position = pos;
+}
+
+void Ball::setMoving(bool&& moving) {
+        this->moving = moving;
+}
+
+void Ball::setVelocity(const Vector &vector) {
+        velocity = vector;
 }

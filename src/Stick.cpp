@@ -33,7 +33,7 @@ auto Stick::getAngle() -> double {
 }
 
 void Stick::update() {
-        position.addTo(velocity);
+        position += velocity;
 }
 
 void Stick::draw() {
@@ -54,7 +54,7 @@ void Stick::setPos(const Vector &vector) {
 }
 
 void Stick::increasePower(const double &angle) {
-        velocity = Vector(-5 * cos(angle), -5 * sin(angle));
+        velocity = Vector(-5 * std::cos(angle), -5 * std::sin(angle));
 }
 
 void Stick::shoot() {
