@@ -26,7 +26,7 @@ class Stick {
                 SDL_Texture *texture = nullptr;
 
                 SDL_Point
-                        center = { -30, 15 };;
+                        center = { -30, 15 };
 
                 SDL_Rect
                         srcrect,
