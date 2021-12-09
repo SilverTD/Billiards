@@ -38,6 +38,13 @@ Ball
 
 Stick *stick = nullptr;
 
+inline auto getMousePosition() -> Vector {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+
+        return Vector(x, y);
+}
+
 void init() {
         ball = new Ball(renderer, Vector(400, 290), 0);
         ball2 = new Ball(renderer, Vector(700, 290), 1);
@@ -54,15 +61,16 @@ void update() {
         if (isMouseDown) {
                 power += 0.8;
 
-                int x, y;
-                SDL_GetMouseState(&x, &y);
+                auto degrees = getMouseAngle(
+                        ball->getPosition(),
+                        getMousePosition()
+                );
 
-                double deg = getMouseAngle(ball->getPosition(), Vector(x, y));
-
-                stick->increasePower(deg);
+                stick->inreasePosition(degrees);
         }
+
         if (isMouseUp) {
-                double angle = (stick->getAngle() * PI) / 180;
+                auto angle = (stick->getAngle() * PI) / 180;
 
                 stick->shoot();
                 ball->shoot(power, angle);
@@ -70,7 +78,8 @@ void update() {
                 power = 0.0;
         }
 
-        if (!ball->isMoving() && !isMouseDown) stick->setPosition(ball->getPosition());
+        if (!ball->isMoving() && !isMouseDown)
+                stick->setPosition(ball->getPosition());
 }
 
 void input() {
@@ -91,12 +100,12 @@ void input() {
                         case SDL_MOUSEMOTION:
                                 if (ball->isMoving()) return;
 
-                                int x, y;
-                                SDL_GetMouseState(&x, &y);
+                                auto degrees = getStickAngle(
+                                        ball->getPosition(),
+                                        getMousePosition()
+                                );
 
-                                double degrees = getStickAngle(ball->getPosition(), Vector(x, y));
-
-                                stick->setRotation(degrees);
+                                stick->setAngle(degrees);
                                 break;
                 }
         }

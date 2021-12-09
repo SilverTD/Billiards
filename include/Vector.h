@@ -2,6 +2,10 @@
 
 #include <tuple>
 
+/*
+        My own Vector2d class.
+        Read more at: https://gist.github.com/silverbossTD/b3f7abdea5879f4879d9e05460465620
+*/
 class Vector {
         public:
                 using Pos = std::tuple<float, float>;

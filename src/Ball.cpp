@@ -76,8 +76,8 @@ void Ball::draw() {
         SDL_RenderCopy(renderer, texture, nullptr, &rect);
 }
 
-void Ball::shoot(const double &power, const double &rotation) {
-        velocity = Vector(-1 * std::cos(rotation) * power, -1 * std::sin(rotation) * power);
+void Ball::shoot(const double &power, const double &angle) {
+        velocity = Vector(-1 * std::cos(angle) * power, -1 * std::sin(angle) * power);
         moving = true;
 }
 

@@ -3,10 +3,16 @@
 
 #include <math.h>
 
+/*
+        Epic pythagorean theorem.
+*/
 auto Physics::getDistance(const Vector &vector, const Vector &vector2) -> double {
         return std::hypot(vector2.x - vector.x, vector2.y - vector.y);
 }
 
+/*
+        Basic trigonometry math in grade 9.
+*/
 auto Physics::getMouseAngle(const Vector &vector, const Vector &vector2) -> double {
         const double opposite = vector2.y - vector.y;
         const double adjacent = vector2.x - vector.x;
@@ -34,6 +40,9 @@ auto Physics::checkCollision(const Ball *const objA, const Ball *const objB) -> 
         return !(dist > BALL_DIAMETER);
 }
 
+/*
+        Read more at: https://gamedevelopment.tutsplus.com/tutorials/when-worlds-collide-simulating-circle-circle-collisions--gamedev-769
+*/
 void Physics::resolveCollision(Ball *const objA, Ball *const objB) {
         if (!checkCollision(objA, objB)) return;
 
@@ -43,8 +52,8 @@ void Physics::resolveCollision(Ball *const objA, Ball *const objB) {
 
         const Vector mtd = n * ((BALL_DIAMETER - dist) / dist);
 
-        objA->setPosition(objA->getPosition() + mtd * (1 / 2));
-        objB->setPosition(objB->getPosition() - mtd * (1 / 2));
+        objA->setPosition(objA->getPosition() + mtd * 0.5f);
+        objB->setPosition(objB->getPosition() - mtd * 0.5f);
 
         const Vector un = n * (1 / n.getMagnitude());
         const Vector ut = Vector(-un.y, un.x);

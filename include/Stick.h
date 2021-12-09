@@ -14,13 +14,14 @@ class Stick {
                 auto getAngle() -> double;
 
                 /* Get */
-                void setRotation(const double &rotation);
+                void setAngle(const double &angle);
                 void setPosition(const Vector &position);
 
                 void update();
                 void draw();
-                void increasePower(const double &angle);
+
                 void shoot();
+                void inreasePosition(const double &angle);
         private:
                 SDL_Renderer *renderer = nullptr;
                 SDL_Texture *texture = nullptr;
@@ -42,5 +43,5 @@ class Stick {
                         textureHeight;
 
                 double
-                        rotation = 180;
+                        angle = 180;
 };
