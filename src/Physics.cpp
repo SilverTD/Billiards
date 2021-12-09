@@ -8,15 +8,15 @@ auto Physics::getDistance(const Vector &vector, const Vector &vector2) -> double
 }
 
 auto Physics::getMouseAngle(const Vector &vector, const Vector &vector2) -> double {
-        double opposite = vector2.y - vector.y;
-        double adjacent = vector2.x - vector.x;
+        const double opposite = vector2.y - vector.y;
+        const double adjacent = vector2.x - vector.x;
 
         return std::atan2(opposite, adjacent);
 }
 
 auto Physics::getStickAngle(const Vector &vector, const Vector &vector2) -> double {
-        double opposite = vector2.y - vector.y;
-        double hypotenuse = getDistance(vector, vector2);
+        const double opposite = vector2.y - vector.y;
+        const double hypotenuse = getDistance(vector, vector2);
 
         double degrees = (std::asin(opposite / hypotenuse) * 180) / PI + 180;
 
@@ -27,7 +27,7 @@ auto Physics::getStickAngle(const Vector &vector, const Vector &vector2) -> doub
 }
 
 auto Physics::checkCollision(const Ball *const objA, const Ball *const objB) -> bool {
-        const Vector n = objA->getPos() - objB->getPos();
+        const Vector n = objA->getPosition() - objB->getPosition();
 
         const float dist = n.getMagnitude();
 
@@ -37,16 +37,16 @@ auto Physics::checkCollision(const Ball *const objA, const Ball *const objB) -> 
 void Physics::resolveCollision(Ball *const objA, Ball *const objB) {
         if (!checkCollision(objA, objB)) return;
 
-        const Vector n = objA->getPos() - objB->getPos();
+        const Vector n = objA->getPosition() - objB->getPosition();
 
         const float dist = n.getMagnitude();
 
-        const Vector mtd = n.mult((BALL_DIAMETER - dist) / dist);
+        const Vector mtd = n * ((BALL_DIAMETER - dist) / dist);
 
-        objA->setPos(objA->getPos() + mtd.mult(1 / 2));
-        objB->setPos(objB->getPos() - mtd.mult(1 / 2));
+        objA->setPosition(objA->getPosition() + mtd * (1 / 2));
+        objB->setPosition(objB->getPosition() - mtd * (1 / 2));
 
-        const Vector un = n.mult(1 / n.getMagnitude());
+        const Vector un = n * (1 / n.getMagnitude());
         const Vector ut = Vector(-un.y, un.x);
 
         const float v1n = un.dot(objA->getVelocity());
@@ -58,11 +58,11 @@ void Physics::resolveCollision(Ball *const objA, Ball *const objB) {
         const float v1nTag = v2n;
         const float v2nTag = v1n;
 
-        const Vector v1nTag2 = un.mult(v1nTag);
-        const Vector v1tTag = ut.mult(v1t);
+        const Vector v1nTag2 = un * v1nTag;
+        const Vector v1tTag = ut * v1t;
 
-        const Vector v2nTag2 = un.mult(v2nTag);
-        const Vector v2tTag = ut.mult(v2t);
+        const Vector v2nTag2 = un * v2nTag;
+        const Vector v2tTag = ut * v2t;
 
         objA->setVelocity(v1nTag2 + v1tTag);
         objB->setVelocity(v2nTag2 + v2tTag);

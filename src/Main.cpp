@@ -24,7 +24,8 @@ int
         fps,
         lastTime;
 
-double power = 0.0;
+double
+        power = 0.0;
 
 bool
         running = true,
@@ -40,7 +41,7 @@ Stick *stick = nullptr;
 void init() {
         ball = new Ball(renderer, Vector(400, 290), 0);
         ball2 = new Ball(renderer, Vector(700, 290), 1);
-        stick = new Stick(renderer, ball->getPos());
+        stick = new Stick(renderer, ball->getPosition());
 }
 
 void update() {
@@ -56,7 +57,7 @@ void update() {
                 int x, y;
                 SDL_GetMouseState(&x, &y);
 
-                double deg = getMouseAngle(ball->getPos(), Vector(x, y));
+                double deg = getMouseAngle(ball->getPosition(), Vector(x, y));
 
                 stick->increasePower(deg);
         }
@@ -69,7 +70,7 @@ void update() {
                 power = 0.0;
         }
 
-        if (!ball->isMoving() && !isMouseDown) stick->setPos(ball->getPos());
+        if (!ball->isMoving() && !isMouseDown) stick->setPosition(ball->getPosition());
 }
 
 void input() {
@@ -93,7 +94,7 @@ void input() {
                                 int x, y;
                                 SDL_GetMouseState(&x, &y);
 
-                                double degrees = getStickAngle(ball->getPos(), Vector(x, y));
+                                double degrees = getStickAngle(ball->getPosition(), Vector(x, y));
 
                                 stick->setRotation(degrees);
                                 break;

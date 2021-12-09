@@ -2,6 +2,8 @@
 
 #include <math.h>
 
+#include "Globals.h"
+
 #include "Ball.h"
 
 std::array<const char*, 2> Ball::colors = {
@@ -20,7 +22,7 @@ Ball::~Ball() {
         SDL_DestroyTexture(texture);
 }
 
-auto Ball::getPos() const -> Vector {
+auto Ball::getPosition() const -> Vector {
         return position;
 }
 
@@ -32,14 +34,13 @@ auto Ball::getVelocity() const -> Vector {
         return velocity;
 }
 
-void Ball::update(const double &delta) {
+void Ball::update() {
         collideWithTable();
 
-        velocity.mult(delta);
         position += velocity;
 
         // Friction
-        velocity = velocity.mult(0.984);
+        velocity *= 0.984;
 
         if (velocity.getMagnitude() < 0.1) {
                 velocity = Vector();
@@ -76,11 +77,11 @@ void Ball::draw() {
 }
 
 void Ball::shoot(const double &power, const double &rotation) {
-        velocity = Vector(-1 * cos(rotation) * power, -1 * sin(rotation) * power);
+        velocity = Vector(-1 * std::cos(rotation) * power, -1 * std::sin(rotation) * power);
         moving = true;
 }
 
-void Ball::setPos(const Vector &pos) {
+void Ball::setPosition(const Vector &pos) {
         position = pos;
 }
 

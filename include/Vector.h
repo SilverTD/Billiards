@@ -27,6 +27,8 @@ class Vector {
 
                 auto operator+(const Vector &other) const -> Vector;
                 auto operator-(const Vector &other) const -> Vector;
+                auto operator*(const float &scalar) const -> Vector;
+                auto operator*=(const float &scalar) -> Vector&;
                 auto operator+=(const Vector &other) -> Vector&;
 
                 /* Get */
@@ -39,7 +41,6 @@ class Vector {
                 void setDirection(const float &direction);
                 void setMagnitude(const float &magnitude);
                 void setPosition(const Pos &position);
-                void setPosition(const float &x, const float &y);
 
                 /* Utilities */
                 auto getPosition() const -> Pos;

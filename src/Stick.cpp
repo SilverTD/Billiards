@@ -15,8 +15,6 @@ renderer(renderer), position(position), origin(position) {
         srcrect.w = textureWidth;
         srcrect.h = textureHeight;
 
-        center = { -30, 15 };
-
         SDL_FreeSurface(surface);
 }
 
@@ -24,7 +22,7 @@ Stick::~Stick() {
         SDL_DestroyTexture(texture);
 }
 
-auto Stick::getPos() -> Vector {
+auto Stick::getPosition() -> Vector {
         return position;
 }
 
@@ -47,7 +45,7 @@ void Stick::setRotation(const double &rotation) {
         this->rotation = rotation;
 }
 
-void Stick::setPos(const Vector &vector) {
+void Stick::setPosition(const Vector &vector) {
         position.setPosition({ vector.x, vector.y });
 
         origin = position;

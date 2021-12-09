@@ -9,20 +9,24 @@ class Stick {
                 Stick(SDL_Renderer *renderer, const Vector &position);
                 ~Stick();
 
-                auto getPos() -> Vector;
+                /* Set */
+                auto getPosition() -> Vector;
                 auto getAngle() -> double;
+
+                /* Get */
+                void setRotation(const double &rotation);
+                void setPosition(const Vector &position);
 
                 void update();
                 void draw();
-                void setRotation(const double &rotation);
-                void setPos(const Vector &position);
                 void increasePower(const double &angle);
                 void shoot();
         private:
                 SDL_Renderer *renderer = nullptr;
                 SDL_Texture *texture = nullptr;
 
-                SDL_Point center;
+                SDL_Point
+                        center = { -30, 15 };;
 
                 SDL_Rect
                         srcrect,
@@ -30,7 +34,7 @@ class Stick {
 
                 Vector
                         position,
-                        velocity = Vector(),
+                        velocity,
                         origin;
 
                 int
@@ -38,5 +42,5 @@ class Stick {
                         textureHeight;
 
                 double
-                        rotation = 0;
+                        rotation = 180;
 };

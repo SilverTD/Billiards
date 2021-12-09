@@ -30,6 +30,17 @@ auto Vector::operator+(const Vector &other) const -> Vector {
         return Vector(x + other.x, y + other.y);
 }
 
+auto Vector::operator*(const float &scalar) const -> Vector {
+        return Vector(x * scalar, y * scalar);
+}
+
+auto Vector::operator*=(const float &scalar) -> Vector& {
+        x *= scalar;
+        y *= scalar;
+
+        return *this;
+}
+
 auto Vector::operator+=(const Vector &other) -> Vector& {
         x += other.x;
         y += other.y;
@@ -74,11 +85,6 @@ void Vector::setMagnitude(const float &magnitude) {
 void Vector::setPosition(const Pos &position) {
         x = std::get<0>(position);
         y = std::get<1>(position);
-}
-
-void Vector::setPosition(const float &x, const float &y) {
-        this->x = x;
-        this->y = y;
 }
 
 /* Utilities */
