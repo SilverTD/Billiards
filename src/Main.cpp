@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+#include <array>
+
 #include "Globals.h"
 
 #include "Ball.h"
@@ -32,11 +34,11 @@ bool
         isMouseDown = false,
         isMouseUp = false;
 
-Ball
-        *ball = nullptr,
-        *ball2 = nullptr;
+Ball *ball = nullptr;
 
 Stick *stick = nullptr;
+
+std::array<Ball*, 16> balls { { nullptr } };
 
 inline auto getMousePosition() -> Vector {
         int x, y;
@@ -45,19 +47,46 @@ inline auto getMousePosition() -> Vector {
         return Vector(x, y);
 }
 
+void freeBalls() {
+        for (unsigned int i = 0; i < balls.size(); ++i)
+                delete balls[i];
+}
+
 void init() {
-        ball = new Ball(renderer, Vector(400, 290), 0);
-        ball2 = new Ball(renderer, Vector(700, 290), 1);
+        /* Init Balls. */
+        ball = balls[0] = new Ball(renderer, Vector(413, 413 - 100), 0);
+        balls[1] = new Ball(renderer, Vector(1090, 413 - 100), 3);
+        balls[2] = new Ball(renderer, Vector(1056, 433 - 100), 1);
+        balls[3] = new Ball(renderer, Vector(1090, 374 - 100), 2);
+        balls[4] = new Ball(renderer, Vector(1126, 393 - 100), 1);
+        balls[5] = new Ball(renderer, Vector(1126, 472 - 100), 2);
+        balls[6] = new Ball(renderer, Vector(1162, 335 - 100), 1);
+        balls[7] = new Ball(renderer, Vector(1162, 374 - 100), 2);
+        balls[8] = new Ball(renderer, Vector(1162, 452 - 100), 1);
+        balls[9] = new Ball(renderer, Vector(1022, 413 - 100), 2);
+        balls[10] = new Ball(renderer, Vector(1056, 393 - 100), 1);
+        balls[11] = new Ball(renderer, Vector(1090, 452 - 100), 2);
+        balls[12] = new Ball(renderer, Vector(1126, 354 - 100), 1);
+        balls[13] = new Ball(renderer, Vector(1126, 433 - 100), 2);
+        balls[14] = new Ball(renderer, Vector(1162, 413 - 100), 1);
+        balls[15] = new Ball(renderer, Vector(1162, 491 - 100), 2);
+
+        /* Init Stick. */
         stick = new Stick(renderer, ball->getPosition());
 }
 
 void update() {
         ball->update();
-        ball2->update();
         stick->update();
 
-        resolveCollision(ball, ball2);
+        for (unsigned int i = 0; i < balls.size(); ++i) {
+                balls[i]->update();
+                for (unsigned int j = i + 1; j < balls.size(); ++j) {
+                        resolveCollision(balls[i], balls[j]);
+                }
+        }
 
+        // resolveCollision(ball, ball2);
         if (isMouseDown) {
                 power += 0.8;
 
@@ -131,7 +160,9 @@ void render() {
         }
 
         ball->draw();
-        ball2->draw();
+        for (auto &current_ball : balls) {
+                current_ball->draw();
+        }
         stick->draw();
 
         SDL_RenderPresent(renderer);
@@ -155,9 +186,8 @@ int main(int argc, char const *argv[]) {
                 render();
         };
 
+        freeBalls();
         delete stick;
-        delete ball;
-        delete ball2;
 
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);

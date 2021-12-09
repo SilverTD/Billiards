@@ -26,7 +26,7 @@ class Ball {
                 void draw();
                 void shoot(const double &power, const double &angle);
         private:
-                static std::array<const char*, 2> colors;
+                static std::array<const char*, 5> colors;
 
                 SDL_Renderer *renderer = nullptr;
                 SDL_Texture *texture = nullptr;

@@ -6,8 +6,9 @@
 
 #include "Ball.h"
 
-std::array<const char*, 2> Ball::colors = {
-        "./assets/ball.png", "./assets/ball2.png"
+std::array<const char*, 5> Ball::colors = {
+        "./assets/ball.png", "./assets/ball2.png",
+        "./assets/ball3.png", "./assets/ball4.png"
 };
 
 Ball::Ball(SDL_Renderer *renderer, const Vector &position, const int &color):
