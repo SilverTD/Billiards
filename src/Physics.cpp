@@ -6,25 +6,25 @@
 /*
         Epic pythagorean theorem.
 */
-auto Physics::getDistance(const Vector &vector, const Vector &vector2) -> double {
+auto Physics::getDistance(const Vector &vector, const Vector &vector2) -> float {
         return std::hypot(vector2.x - vector.x, vector2.y - vector.y);
 }
 
 /*
         Basic trigonometry math in grade 9.
 */
-auto Physics::getMouseAngle(const Vector &vector, const Vector &vector2) -> double {
-        const double opposite = vector2.y - vector.y;
-        const double adjacent = vector2.x - vector.x;
+auto Physics::getMouseAngle(const Vector &vector, const Vector &vector2) -> float {
+        const float opposite = vector2.y - vector.y;
+        const float adjacent = vector2.x - vector.x;
 
         return std::atan2(opposite, adjacent);
 }
 
-auto Physics::getStickAngle(const Vector &vector, const Vector &vector2) -> double {
-        const double opposite = vector2.y - vector.y;
-        const double hypotenuse = getDistance(vector, vector2);
+auto Physics::getStickAngle(const Vector &vector, const Vector &vector2) -> float {
+        const float opposite = vector2.y - vector.y;
+        const float hypotenuse = getDistance(vector, vector2);
 
-        double degrees = (std::asin(opposite / hypotenuse) * 180) / PI + 180;
+        float degrees = (std::asin(opposite / hypotenuse) * 180) / PI + 180;
 
         if (vector.x > vector2.x) degrees = 180 - degrees;
         if (degrees < 0) degrees += 360;

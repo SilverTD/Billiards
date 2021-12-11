@@ -24,7 +24,7 @@ class Ball {
                 void update();
                 void collideWithTable();
                 void draw();
-                void shoot(const double &power, const double &angle);
+                void shoot(const float &power, const float &angle);
         private:
                 static std::array<const char*, 5> colors;
 

@@ -26,7 +26,7 @@ auto Stick::getPosition() -> Vector {
         return position;
 }
 
-auto Stick::getAngle() -> double {
+auto Stick::getAngle() -> float {
         return angle;
 }
 
@@ -47,7 +47,7 @@ void Stick::draw() {
         SDL_RenderCopyEx(renderer, texture, &srcrect, &dstrect, angle, &center, SDL_FLIP_HORIZONTAL);
 }
 
-void Stick::setAngle(const double &angle) {
+void Stick::setAngle(const float &angle) {
         this->angle = angle;
 }
 
@@ -57,7 +57,7 @@ void Stick::setPosition(const Vector &vector) {
         origin = position;
 }
 
-void Stick::inreasePosition(const double &angle) {
+void Stick::setVelocity(const float &angle) {
         velocity = Vector(-5 * std::cos(angle), -5 * std::sin(angle));
 }
 

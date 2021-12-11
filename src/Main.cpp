@@ -26,7 +26,7 @@ int
         fps,
         lastTime;
 
-double
+float
         power = 0.0;
 
 bool
@@ -39,6 +39,8 @@ Ball *ball = nullptr;
 Stick *stick = nullptr;
 
 std::array<Ball*, 16> balls { { nullptr } };
+
+SDL_Event event;
 
 inline auto getMousePosition() -> Vector {
         int x, y;
@@ -54,29 +56,31 @@ void freeBalls() {
 
 void init() {
         /* Init Balls. */
-        ball = balls[0] = new Ball(renderer, Vector(413, 413 - 100), 0);
-        balls[1] = new Ball(renderer, Vector(1090, 413 - 100), 3);
-        balls[2] = new Ball(renderer, Vector(1056, 433 - 100), 1);
-        balls[3] = new Ball(renderer, Vector(1090, 374 - 100), 2);
-        balls[4] = new Ball(renderer, Vector(1126, 393 - 100), 1);
-        balls[5] = new Ball(renderer, Vector(1126, 472 - 100), 2);
-        balls[6] = new Ball(renderer, Vector(1162, 335 - 100), 1);
-        balls[7] = new Ball(renderer, Vector(1162, 374 - 100), 2);
-        balls[8] = new Ball(renderer, Vector(1162, 452 - 100), 1);
-        balls[9] = new Ball(renderer, Vector(1022, 413 - 100), 2);
-        balls[10] = new Ball(renderer, Vector(1056, 393 - 100), 1);
-        balls[11] = new Ball(renderer, Vector(1090, 452 - 100), 2);
-        balls[12] = new Ball(renderer, Vector(1126, 354 - 100), 1);
-        balls[13] = new Ball(renderer, Vector(1126, 433 - 100), 2);
-        balls[14] = new Ball(renderer, Vector(1162, 413 - 100), 1);
-        balls[15] = new Ball(renderer, Vector(1162, 491 - 100), 2);
+        balls = {
+                new Ball(renderer, Vector(413, 313), 0),
+                new Ball(renderer, Vector(1090, 313), 3),
+                new Ball(renderer, Vector(1056, 333), 1),
+                new Ball(renderer, Vector(1090, 274), 2),
+                new Ball(renderer, Vector(1126, 293), 1),
+                new Ball(renderer, Vector(1126, 372), 2),
+                new Ball(renderer, Vector(1162, 235), 1),
+                new Ball(renderer, Vector(1162, 274), 2),
+                new Ball(renderer, Vector(1162, 352), 1),
+                new Ball(renderer, Vector(1022, 313), 2),
+                new Ball(renderer, Vector(1056, 293), 1),
+                new Ball(renderer, Vector(1090, 352), 2),
+                new Ball(renderer, Vector(1126, 254), 1),
+                new Ball(renderer, Vector(1126, 333), 2),
+                new Ball(renderer, Vector(1162, 313), 1),
+                new Ball(renderer, Vector(1162, 391), 2)
+        };
 
         /* Init Stick. */
+        ball = balls[0];
         stick = new Stick(renderer, ball->getPosition());
 }
 
 void update() {
-        ball->update();
         stick->update();
 
         for (unsigned int i = 0; i < balls.size(); ++i) {
@@ -86,7 +90,6 @@ void update() {
                 }
         }
 
-        // resolveCollision(ball, ball2);
         if (isMouseDown) {
                 power += 0.8;
 
@@ -95,7 +98,7 @@ void update() {
                         getMousePosition()
                 );
 
-                stick->inreasePosition(degrees);
+                stick->setVelocity(degrees);
         }
 
         if (isMouseUp) {
@@ -112,7 +115,6 @@ void update() {
 }
 
 void input() {
-        SDL_Event event;
         while (SDL_PollEvent(&event)) {
                 switch (event.type) {
                         case SDL_QUIT: running = false; break;
@@ -155,14 +157,12 @@ void render() {
 
         ++frameCount;
         timerFPS = SDL_GetTicks() - lastFrame;
-        if (timerFPS < (1000 / 60)) {
+        if (timerFPS < (1000 / 60))
                 SDL_Delay((1000 / 60) - timerFPS);
-        }
 
         ball->draw();
-        for (auto &current_ball : balls) {
+        for (auto &current_ball : balls)
                 current_ball->draw();
-        }
         stick->draw();
 
         SDL_RenderPresent(renderer);

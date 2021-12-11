@@ -11,17 +11,17 @@ class Stick {
 
                 /* Set */
                 auto getPosition() -> Vector;
-                auto getAngle() -> double;
+                auto getAngle() -> float;
 
                 /* Get */
-                void setAngle(const double &angle);
+                void setAngle(const float &angle);
                 void setPosition(const Vector &position);
 
                 void update();
                 void draw();
 
                 void shoot();
-                void inreasePosition(const double &angle);
+                void setVelocity(const float &angle);
         private:
                 SDL_Renderer *renderer = nullptr;
                 SDL_Texture *texture = nullptr;
@@ -42,6 +42,6 @@ class Stick {
                         textureWidth,
                         textureHeight;
 
-                double
+                float
                         angle = 180;
 };
