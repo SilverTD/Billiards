@@ -11,12 +11,12 @@ class Ball {
                 Ball(SDL_Renderer *renderer, const Vector &position, const int &color);
                 ~Ball();
 
-                /* Set */
+                /* Get */
                 auto getPosition() const -> Vector;
                 auto isMoving() const -> bool;
                 auto getVelocity() const -> Vector;
 
-                /* Get */
+                /* Set */
                 void setPosition(const Vector &pos);
                 void setMoving(bool&& moving);
                 void setVelocity(const Vector &vector);

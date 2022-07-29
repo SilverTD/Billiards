@@ -54,19 +54,19 @@ void Ball::collideWithTable() {
 
         if (position.y <= 0) {
                 position.y = 0;
-                velocity = Vector(velocity.x, -velocity.y);
+                velocity.y = -velocity.y;
         }
         else if (position.y >= SCREEN_HEIGHT - BALL_DIAMETER) {
                 position.y = SCREEN_HEIGHT - BALL_DIAMETER;
-                velocity = Vector(velocity.x, -velocity.y);
+                velocity.y = -velocity.y;
         }
         if (position.x <= 0) {
                 position.x = 0;
-                velocity = Vector(-velocity.x, velocity.y);
+                velocity.x = -velocity.x;
         }
         else if (position.x >= SCREEN_WIDTH - BALL_DIAMETER) {
                 position.x = SCREEN_WIDTH - BALL_DIAMETER;
-                velocity = Vector(-velocity.x, velocity.y);
+                velocity.x = -velocity.x;
         }
 }
 

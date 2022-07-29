@@ -22,11 +22,11 @@ Stick::~Stick() {
         SDL_DestroyTexture(texture);
 }
 
-auto Stick::getPosition() -> Vector {
+auto Stick::getPosition() const -> Vector {
         return position;
 }
 
-auto Stick::getAngle() -> float {
+auto Stick::getAngle() const -> float {
         return angle;
 }
 

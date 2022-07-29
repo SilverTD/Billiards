@@ -10,8 +10,8 @@ class Stick {
                 ~Stick();
 
                 /* Set */
-                auto getPosition() -> Vector;
-                auto getAngle() -> float;
+                auto getPosition() const -> Vector;
+                auto getAngle() const -> float;
 
                 /* Get */
                 void setAngle(const float &angle);

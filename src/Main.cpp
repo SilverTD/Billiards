@@ -83,9 +83,9 @@ void init() {
 void update() {
         stick->update();
 
-        for (unsigned int i = 0; i < balls.size(); ++i) {
+        for (unsigned i = 0; i < balls.size(); ++i) {
                 balls[i]->update();
-                for (unsigned int j = i + 1; j < balls.size(); ++j) {
+                for (unsigned j = i + 1; j < balls.size(); ++j) {
                         resolveCollision(balls[i], balls[j]);
                 }
         }
